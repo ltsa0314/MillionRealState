@@ -38,6 +38,11 @@ namespace MillionRealState.Domain.Aggregates.PropertyTrace
         public int IdProperty { get; private set; }
 
         /// <summary>
+        /// Propiedad de navegación a la propiedad asociada (lazy loading).
+        /// </summary>
+        public virtual PropertyAggregate Property { get; protected set; } = default!;
+
+        /// <summary>
         /// Constructor principal para crear una traza de propiedad.
         /// </summary>
         /// <param name="dateSale">Fecha de la venta.</param>
@@ -76,4 +81,4 @@ namespace MillionRealState.Domain.Aggregates.PropertyTrace
         /// </summary>
         protected PropertyTraceAggregate() { }
     }
-}       
+}

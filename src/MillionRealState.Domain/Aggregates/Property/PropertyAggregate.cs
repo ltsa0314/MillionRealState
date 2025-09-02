@@ -1,4 +1,5 @@
 ﻿using MillionRealState.Domain.Aggregates.Owner;
+using MillionRealState.Domain.Aggregates.PropertyTrace;
 using MillionRealState.Domain.SeedWork.Models;
 
 namespace MillionRealState.Domain.Aggregates.Property
@@ -7,47 +8,26 @@ namespace MillionRealState.Domain.Aggregates.Property
     /// Agregado raíz que representa una propiedad inmobiliaria.
     /// Contiene la información principal de la propiedad y la colección de imágenes asociadas.
     /// </summary>
-    internal class PropertyAggregate : AggregateRoot
+    public class PropertyAggregate : AggregateRoot
     {
-        /// <summary>
-        /// Identificador único de la propiedad.
-        /// </summary>
         public int IdProperty { get; private set; }
-
-        /// <summary>
-        /// Nombre de la propiedad.
-        /// </summary>
         public string Name { get; private set; } = string.Empty;
-
-        /// <summary>
-        /// Dirección de la propiedad, representada como un Value Object.
-        /// </summary>
         public AddressValueObject Address { get; private set; } = default!;
-
-        /// <summary>
-        /// Precio actual de la propiedad.
-        /// </summary>
         public decimal Price { get; private set; }
-
-        /// <summary>
-        /// Código interno de la propiedad.
-        /// </summary>
         public string CodeInternal { get; private set; } = string.Empty;
-
-        /// <summary>
-        /// Año de construcción o registro de la propiedad.
-        /// </summary>
         public int Year { get; private set; }
-
-        /// <summary>
-        /// Identificador del propietario de la propiedad.
-        /// </summary>
         public int IdOwner { get; private set; }
 
         /// <summary>
-        /// Colección de imágenes asociadas a la propiedad.
+        /// Colección de imágenes asociadas a la propiedad (lazy loading).
         /// </summary>
-        public List<PropertyImage> Images { get; private set; } = new();
+        public virtual List<PropertyImage> Images { get; protected set; } = new();
+
+        /// <summary>
+        /// Colección de trazas (historial de venta) asociadas a la propiedad (lazy loading).
+        /// </summary>
+        public virtual List<PropertyTraceAggregate> Traces { get; protected set; } = new();
+
 
         /// <summary>
         /// Constructor para crear una nueva propiedad inmobiliaria.

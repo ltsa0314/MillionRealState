@@ -11,6 +11,11 @@ namespace MillionRealState.Domain.Aggregates.Property
         public bool Enabled { get; private set; }
 
         /// <summary>
+        /// Propiedad de navegación a la propiedad (lazy loading).
+        /// </summary>
+        public virtual PropertyAggregate Property { get; protected set; } = default!;
+
+        /// <summary>
         /// Constructor principal para crear una imagen de propiedad.
         /// </summary>
         public PropertyImage(int idProperty, string file, bool enabled)
