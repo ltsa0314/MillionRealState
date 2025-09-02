@@ -19,4 +19,8 @@
     <ProjectReference Include="..\MillionRealState.Domain\MillionRealState.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Owner\Validators\" />
+  </ItemGroup>
+
 </Project>

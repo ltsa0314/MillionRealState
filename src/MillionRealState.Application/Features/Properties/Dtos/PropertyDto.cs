@@ -1,28 +1,16 @@
 ﻿namespace MillionRealState.Application.Features.Properties.Dtos
 {
+    public sealed record PropertyImageDto(int IdPropertyImage, string File, bool Enabled);
+
     public sealed record PropertyDto(
-        int Id,
+        int IdProperty,
         string Name,
         AddressDto Address,
         decimal Price,
         string CodeInternal,
         int Year,
-        int OwnerId);
+        int IdOwner,
+        List<PropertyImageDto> Images,
+        int TracesCount);
 
-    public sealed record AddressDto(string Country, string City, string Neighborhood, string Street, string Number);
-
-    public sealed record CreatePropertyDto(
-    string Name,
-    AddressDto Address,
-    decimal Price,
-    string CodeInternal,
-    int Year,
-    int OwnerId);
-
-    public sealed record UpdatePropertyDto(
-        string Name,
-        AddressDto Address,
-        string CodeInternal,
-        int Year,
-        int OwnerId);
 }

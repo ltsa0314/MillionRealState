@@ -1,14 +1,15 @@
-﻿using MillionRealState.Application.Features.Properties.Dtos;
+﻿using MillionRealState.Application.Common.Results;
+using MillionRealState.Application.Features.Properties.Dtos;
 
 namespace MillionRealState.Application.Abstractions.Services
 {
     public interface IPropertyService
     {
-        public Task<int> CreateAsync(CreatePropertyDto dto, CancellationToken ct = default);
-        public Task UpdateAsync(int id, UpdatePropertyDto dto, CancellationToken ct = default);
-        public Task ChangePriceAsync(int id, decimal newPrice, CancellationToken ct = default);
-        public Task<PropertyDto> GetByIdAsync(int id, CancellationToken ct = default);
-        public Task<List<PropertyDto>> GetAllAsync(CancellationToken ct = default);
-        public Task DeleteAsync(int id, CancellationToken ct = default);
+        Task<Guid> CreateAsync(CreatePropertyDto dto, CancellationToken ct = default);              
+        Task AddImageAsync(Guid idProperty, AddPropertyImageDto dto, CancellationToken ct = default); 
+        Task ChangePriceAsync(Guid idProperty, decimal newPrice, CancellationToken ct = default);     
+        Task UpdateAsync(Guid idProperty, UpdatePropertyDto dto, CancellationToken ct = default);     
+        Task<PropertyDto> GetByIdAsync(Guid idProperty, CancellationToken ct = default);
+        Task<PagedResult<PropertyDto>> ListAsync(PropertyFilterDto filters, CancellationToken ct = default); 
     }
 }

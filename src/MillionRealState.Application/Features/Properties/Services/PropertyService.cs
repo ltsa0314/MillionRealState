@@ -1,83 +1,94 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MillionRealState.Application.Abstractions.Services;
-using MillionRealState.Application.Common.Exceptions;
+using MillionRealState.Application.Common.Results;
 using MillionRealState.Application.Features.Properties.Dtos;
 using MillionRealState.Domain.Aggregates.Owner;
 using MillionRealState.Domain.Aggregates.Property;
-using MillionRealState.Domain.SeedWork.Contracts;
 
 namespace MillionRealState.Application.Features.Properties.Services
 {
     public sealed class PropertyService : IPropertyService
     {
-        private readonly IRepository<PropertyAggregate, int> _repo;
+        private readonly IPropertyRepository _repo;
+        private readonly IValidator<CreatePropertyDto> _createVal;
+        private readonly IValidator<UpdatePropertyDto> _updateVal;
+        private readonly IValidator<AddPropertyImageDto> _imgVal;
         private readonly IMapper _mapper;
-        private readonly IValidator<CreatePropertyDto>? _createValidator;
-        private readonly IValidator<UpdatePropertyDto>? _updateValidator;
 
         public PropertyService(
-            IRepository<PropertyAggregate, int> repo,
-            IMapper mapper,
-            IValidator<CreatePropertyDto>? createValidator = null,
-            IValidator<UpdatePropertyDto>? updateValidator = null)
-        {
-            _repo = repo;
-            _mapper = mapper;
-            _createValidator = createValidator;
-            _updateValidator = updateValidator;
-        }
+            IPropertyRepository repo,
+            IValidator<CreatePropertyDto> createVal,
+            IValidator<UpdatePropertyDto> updateVal,
+            IValidator<AddPropertyImageDto> imgVal,
+            IMapper mapper)
+            => (_repo, _createVal, _updateVal, _imgVal, _mapper) = (repo, createVal, updateVal, imgVal, mapper);
 
+        // Create Property Building
         public async Task<int> CreateAsync(CreatePropertyDto dto, CancellationToken ct = default)
         {
-            if (_createValidator is not null) await _createValidator.ValidateAndThrowAsync(dto, ct);
+            await _createVal.ValidateAndThrowAsync(dto, ct);
 
-            var address = new AddressValueObject(
-                dto.Address.Country, dto.Address.City, dto.Address.Neighborhood, dto.Address.Street, dto.Address.Number);
+            var entity = _mapper.Map<PropertyAggregate>(dto);
 
-            var entity = new PropertyAggregate(
-                dto.Name, address, dto.Price, dto.CodeInternal, dto.Year, dto.OwnerId);
-
-            await _repo.AddAsync(entity); // tu repo hace SaveChanges adentro
+            await _repo.AddAsync(entity);
             return entity.IdProperty;
         }
 
-        public async Task UpdateAsync(int id, UpdatePropertyDto dto, CancellationToken ct = default)
+        // Add Image from property
+        public async Task AddImageAsync(Guid idProperty, AddPropertyImageDto dto, CancellationToken ct = default)
         {
-            if (_updateValidator is not null) await _updateValidator.ValidateAndThrowAsync(dto, ct);
+            await _imgVal.ValidateAndThrowAsync(dto, ct);
 
-            var entity = await _repo.GetByIdAsync(id) ?? throw new NotFoundException("Property", id);
+            var prop = await _repo.GetByIdAsync(idProperty)
+                      ?? throw new KeyNotFoundException($"Property {idProperty} no existe.");
 
-            var address = new AddressValueObject(
-                dto.Address.Country, dto.Address.City, dto.Address.Neighborhood, dto.Address.Street, dto.Address.Number);
-
-            entity.Update(dto.Name, address, dto.CodeInternal, dto.Year, dto.OwnerId);
-            await _repo.UpdateAsync(entity); // SaveChanges adentro
+            prop.AddImage(dto.File, dto.Enabled);
+            await _repo.UpdateAsync(prop);
         }
 
-        public async Task ChangePriceAsync(int id, decimal newPrice, CancellationToken ct = default)
+        // Change Price
+        public async Task ChangePriceAsync(Guid idProperty, decimal newPrice, CancellationToken ct = default)
         {
-            var entity = await _repo.GetByIdAsync(id) ?? throw new NotFoundException("Property", id);
-            entity.ChangePrice(newPrice);
-            await _repo.UpdateAsync(entity);
+            var prop = await _repo.GetByIdAsync(idProperty)
+                      ?? throw new KeyNotFoundException($"Property {idProperty} no existe.");
+
+            prop.ChangePrice(newPrice);
+            await _repo.UpdateAsync(prop);
         }
 
-        public async Task<PropertyDto> GetByIdAsync(int id, CancellationToken ct = default)
+        // Update property (usando mapper para Address VO)
+        public async Task UpdateAsync(Guid idProperty, UpdatePropertyDto dto, CancellationToken ct = default)
         {
-            var entity = await _repo.GetByIdAsync(id) ?? throw new NotFoundException("Property", id);
-            return _mapper.Map<PropertyDto>(entity);
+            await _updateVal.ValidateAndThrowAsync(dto, ct);
+
+            var prop = await _repo.GetByIdAsync(idProperty)
+                      ?? throw new KeyNotFoundException($"Property {idProperty} no existe.");
+
+            var addressVO = _mapper.Map<AddressValueObject>(dto); // mapeo configurado arriba
+            prop.Update(dto.Name, addressVO, dto.CodeInternal, dto.Year, dto.IdOwner);
+
+            await _repo.UpdateAsync(prop);
         }
 
-        public async Task<List<PropertyDto>> GetAllAsync(CancellationToken ct = default)
+        public async Task<PropertyDto> GetByIdAsync(Guid idProperty, CancellationToken ct = default)
         {
-            var list = await _repo.GetAllAsync();
-            return _mapper.Map<List<PropertyDto>>(list.ToList());
+            var prop = await _repo.GetByIdAsync(idProperty)
+                      ?? throw new KeyNotFoundException($"Property {idProperty} no existe.");
+
+            return _mapper.Map<PropertyDto>(prop);
         }
 
-        public async Task DeleteAsync(int id, CancellationToken ct = default)
+        public async Task<PagedResult<PropertyDto>> ListAsync(PropertyFilterDto f, CancellationToken ct = default)
         {
-            var exists = await _repo.ExistsAsync(id);
-            if (!exists) throw new NotFoundException("Property", id);
-            await _repo.DeleteAsync(id);
+            var filter = _mapper.Map<PropertyFilter>(f);
+
+            var (items, total) = await _repo.ListPagedAsync(filter, ct);
+
+            var dtos = _mapper.Map<List<PropertyDto>>(items);
+
+            return new PagedResult<PropertyDto>(dtos, total, filter.Page, filter.PageSize);
         }
+
     }
 }

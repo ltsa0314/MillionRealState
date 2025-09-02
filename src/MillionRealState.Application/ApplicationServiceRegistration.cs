@@ -13,6 +13,7 @@ namespace MillionRealState.Application
         {
             var assembly = Assembly.GetExecutingAssembly();
 
+            // AutoMapper
             services.AddAutoMapper(cfg =>
             {
                 cfg.AddMaps(assembly);
