@@ -18,6 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\MillionRealState.Application\MillionRealState.Application.csproj" />
 		<ProjectReference Include="..\MillionRealState.Domain\MillionRealState.Domain.csproj" />
 		<ProjectReference Include="..\MillionRealState.Infrastructure\MillionRealState.Infrastructure.csproj" />
 	</ItemGroup>

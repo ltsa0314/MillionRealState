@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MillionRealState.Domain.Aggregates.Property;
+using MillionRealState.Infrastructure.Common;
+using MillionRealState.Infrastructure.Data.Context;
 
 namespace MillionRealState.Infrastructure.Repositories
 {
-    internal class PropertyRepository
+    public  class PropertyRepository : BaseRepository<PropertyAggregate, Guid>, IPropertyRepository
     {
+        public PropertyRepository(MillionRealStateDbContext context) : base(context)
+        {
+        }
     }
 }

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MillionRealState.Domain.Aggregates.Property;
+using MillionRealState.Domain.Aggregates.PropertyTrace;
+using MillionRealState.Infrastructure.Common;
+using MillionRealState.Infrastructure.Data.Context;
 
 namespace MillionRealState.Infrastructure.Repositories
 {
-    internal class PropertyTraceRepository
+    public  class PropertyTraceRepository : BaseRepository<PropertyTraceAggregate, Guid>, IPropertyTraceRepository
     {
+        public PropertyTraceRepository(MillionRealStateDbContext context) : base(context)
+        {
+        }
     }
 }

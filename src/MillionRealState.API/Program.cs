@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using MillionRealState.Infrastructure.Data.Context;
+using MillionRealState.Infrastructure;
+using MillionRealState.Application;
 
 namespace MillionRealState.Api
 {
@@ -13,7 +15,12 @@ namespace MillionRealState.Api
             // Add services to the container.
             builder.Services.AddDbContext<MillionRealStateDbContext>(opt =>
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("MillionRealStateDb"))
-                   .UseLazyLoadingProxies()); // si usas proxies
+                   .UseLazyLoadingProxies());
+
+
+            // Register application and infrastructure services
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure();
 
 
             builder.Services.AddControllers();
