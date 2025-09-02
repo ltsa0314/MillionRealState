@@ -1,3 +1,4 @@
+using MillionRealState.Domain.Aggregates.Property;
 using MillionRealState.Domain.SeedWork.Models;
 
 namespace MillionRealState.Domain.Aggregates.PropertyTrace

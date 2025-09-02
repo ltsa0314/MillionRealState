@@ -29,6 +29,8 @@ namespace MillionRealState.Domain.Aggregates.Property
         public virtual List<PropertyTraceAggregate> Traces { get; protected set; } = new();
 
 
+
+
         /// <summary>
         /// Constructor para crear una nueva propiedad inmobiliaria.
         /// </summary>
@@ -63,6 +65,12 @@ namespace MillionRealState.Domain.Aggregates.Property
             IdOwner = idOwner;
             CreatedAt = DateTime.UtcNow;
         }
+
+
+        /// <summary>
+        /// Constructor protegido para compatibilidad con EF Core.
+        /// </summary>
+        protected PropertyAggregate() { }
 
         /// <summary>
         /// Agrega una nueva imagen a la propiedad.

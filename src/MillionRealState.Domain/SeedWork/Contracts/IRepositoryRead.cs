@@ -7,7 +7,7 @@ namespace MillionRealState.Domain.SeedWork.Contracts
     /// </summary>
     /// <typeparam name="TEntity">Tipo de la entidad agregada.</typeparam>
     /// <typeparam name="TKey">Tipo de la clave primaria de la entidad.</typeparam>
-    internal interface IRepositoryRead<TEntity, TKey>
+    public interface IRepositoryRead<TEntity, TKey>
         where TEntity : AggregateRoot
     {
         /// <summary>

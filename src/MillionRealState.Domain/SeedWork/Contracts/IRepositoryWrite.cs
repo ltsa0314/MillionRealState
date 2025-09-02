@@ -7,7 +7,7 @@ namespace MillionRealState.Domain.SeedWork.Contracts
     /// </summary>
     /// <typeparam name="TEntity">Tipo de la entidad agregada.</typeparam>
     /// <typeparam name="TKey">Tipo de la clave primaria de la entidad.</typeparam>
-    internal interface IRepositoryWrite<TEntity, TKey>
+    public interface IRepositoryWrite<TEntity, TKey>
         where TEntity : AggregateRoot
     {
         Task AddAsync(TEntity entity);

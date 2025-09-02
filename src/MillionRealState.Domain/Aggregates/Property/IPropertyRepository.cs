@@ -2,7 +2,7 @@
 
 namespace MillionRealState.Domain.Aggregates.Property
 {
-    internal interface IPropertyRepository : IRepository<PropertyAggregate, Guid>
+    public interface IPropertyRepository : IRepository<PropertyAggregate, Guid>
     {
     }
 }

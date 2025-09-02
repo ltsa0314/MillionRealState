@@ -2,7 +2,7 @@
 
 namespace MillionRealState.Domain.Aggregates.Owner
 {
-    internal interface IOwnerRepository : IRepository<OwnerAggregate, Guid>
+    public interface IOwnerRepository : IRepository<OwnerAggregate, Guid>
     {
     }
 }

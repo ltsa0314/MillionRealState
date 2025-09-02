@@ -1,0 +1,156 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace MillionRealState.Infrastructure.Data.Migrations
+{
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Owners",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Address_State = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Address_ZipCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Address_Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Photo = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
+                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Owners", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Properties",
+                columns: table => new
+                {
+                    IdProperty = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Address_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Address_State = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Address_ZipCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Address_Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CodeInternal = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    IdOwner = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Properties", x => x.IdProperty);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropertyImages",
+                columns: table => new
+                {
+                    IdPropertyImage = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdProperty = table.Column<int>(type: "int", nullable: false),
+                    File = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Enabled = table.Column<bool>(type: "bit", nullable: false),
+                    PropertyIdProperty = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyImages", x => x.IdPropertyImage);
+                    table.ForeignKey(
+                        name: "FK_PropertyImages_Properties_IdProperty",
+                        column: x => x.IdProperty,
+                        principalTable: "Properties",
+                        principalColumn: "IdProperty",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PropertyImages_Properties_PropertyIdProperty",
+                        column: x => x.PropertyIdProperty,
+                        principalTable: "Properties",
+                        principalColumn: "IdProperty",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropertyTraces",
+                columns: table => new
+                {
+                    IdPropertyTrace = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateSale = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IdProperty = table.Column<int>(type: "int", nullable: false),
+                    PropertyIdProperty = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyTraces", x => x.IdPropertyTrace);
+                    table.ForeignKey(
+                        name: "FK_PropertyTraces_Properties_IdProperty",
+                        column: x => x.IdProperty,
+                        principalTable: "Properties",
+                        principalColumn: "IdProperty",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PropertyTraces_Properties_PropertyIdProperty",
+                        column: x => x.PropertyIdProperty,
+                        principalTable: "Properties",
+                        principalColumn: "IdProperty",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyImages_IdProperty",
+                table: "PropertyImages",
+                column: "IdProperty");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyImages_PropertyIdProperty",
+                table: "PropertyImages",
+                column: "PropertyIdProperty");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyTraces_IdProperty",
+                table: "PropertyTraces",
+                column: "IdProperty");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PropertyTraces_PropertyIdProperty",
+                table: "PropertyTraces",
+                column: "PropertyIdProperty");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Owners");
+
+            migrationBuilder.DropTable(
+                name: "PropertyImages");
+
+            migrationBuilder.DropTable(
+                name: "PropertyTraces");
+
+            migrationBuilder.DropTable(
+                name: "Properties");
+        }
+    }
+}

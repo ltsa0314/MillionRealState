@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using MillionRealState.Infrastructure.Data.Context;
+
 namespace MillionRealState.Api
 {
     public class Program
@@ -8,6 +11,10 @@ namespace MillionRealState.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<MillionRealStateDbContext>(opt =>
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("MillionRealStateDb"))
+                   .UseLazyLoadingProxies()); // si usas proxies
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

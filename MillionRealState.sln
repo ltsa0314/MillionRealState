@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillionRealState.Infrastruc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillionRealState.Application", "src\MillionRealState.Application\MillionRealState.Application.csproj", "{B743FAD9-4CFE-4298-A031-AD5DEDE33596}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillionRealState.Api", "MillionRealState.Api\MillionRealState.Api.csproj", "{F7BC7FCC-9304-4294-9CB8-244DB7D9BECE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillionRealState.Api", "src\MillionRealState.Api\MillionRealState.Api.csproj", "{F7BC7FCC-9304-4294-9CB8-244DB7D9BECE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
