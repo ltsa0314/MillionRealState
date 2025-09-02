@@ -1,4 +1,11 @@
 ﻿namespace MillionRealState.Application.Features.Properties.Dtos
 {
-    public sealed record AddressDto(string Street, string City, string State, string ZipCode, string Country);
+    public class AddressDto
+    {
+        public string Street { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string State { get; set; } = string.Empty;
+        public string ZipCode { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+    }
 }

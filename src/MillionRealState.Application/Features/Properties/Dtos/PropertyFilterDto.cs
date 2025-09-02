@@ -1,15 +1,14 @@
 ﻿namespace MillionRealState.Application.Features.Properties.Dtos
 {
-    public sealed record PropertyFilterDto(
-        Guid? IdOwner = null,
-        string? City = null,
-        decimal? PriceMin = null,
-        decimal? PriceMax = null,
-        int? YearFrom = null,
-        int? YearTo = null,
-        string? Text = null,
-        string? SortBy = "Name",
-        string? SortDir = "asc",
-        int Page = 1,
-        int PageSize = 20);
+    public class PropertyFilterDto
+    {
+        public string? Name { get; set; }
+        public string? City { get; set; }
+        public decimal? MinPrice { get; set; }
+        public decimal? MaxPrice { get; set; }
+        public int? Year { get; set; }
+        public int? IdOwner { get; set; }
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+    }
 }

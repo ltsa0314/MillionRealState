@@ -1,4 +1,8 @@
 ﻿namespace MillionRealState.Application.Features.Properties.Dtos
 {
-    public sealed record AddPropertyImageDto(string File, bool Enabled);
+    public class AddPropertyImageDto
+    {
+        public string File { get; set; } = string.Empty;
+        public bool Enabled { get; set; }
+    }
 }
