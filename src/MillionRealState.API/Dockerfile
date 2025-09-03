@@ -12,10 +12,13 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["MillionRealState.Api/MillionRealState.Api.csproj", "MillionRealState.Api/"]
-RUN dotnet restore "./MillionRealState.Api/MillionRealState.Api.csproj"
+COPY ["src/MillionRealState.Api/MillionRealState.Api.csproj", "src/MillionRealState.Api/"]
+COPY ["src/MillionRealState.Application/MillionRealState.Application.csproj", "src/MillionRealState.Application/"]
+COPY ["src/MillionRealState.Domain/MillionRealState.Domain.csproj", "src/MillionRealState.Domain/"]
+COPY ["src/MillionRealState.Infrastructure/MillionRealState.Infrastructure.csproj", "src/MillionRealState.Infrastructure/"]
+RUN dotnet restore "./src/MillionRealState.Api/MillionRealState.Api.csproj"
 COPY . .
-WORKDIR "/src/MillionRealState.Api"
+WORKDIR "/src/src/MillionRealState.Api"
 RUN dotnet build "./MillionRealState.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase se usa para publicar el proyecto de servicio que se copiará en la fase final.

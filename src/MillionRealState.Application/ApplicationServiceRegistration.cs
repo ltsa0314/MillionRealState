@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MillionRealState.Application.Abstractions.Services;
 using MillionRealState.Application.Features.Properties.Services;
+using MillionRealState.Application.Features.Owners.Services;
 using System.Reflection;
 
 namespace MillionRealState.Application
@@ -25,6 +26,7 @@ namespace MillionRealState.Application
 
 
             services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<IOwnerService, OwnerService>();
 
             return services;
         }

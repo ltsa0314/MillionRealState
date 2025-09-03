@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using MillionRealState.Infrastructure.Data.Context;
 using MillionRealState.Infrastructure;
@@ -14,21 +13,26 @@ namespace MillionRealState.Api
 
             // Add services to the container.
             builder.Services.AddDbContext<MillionRealStateDbContext>(opt =>
-                opt.UseSqlServer(builder.Configuration.GetConnectionString("MillionRealStateDb"))
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("MillionRealStateDb"),
+                    sqlOptions => sqlOptions.EnableRetryOnFailure())
                    .UseLazyLoadingProxies());
 
-
             // Register application and infrastructure services
-            builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
-
+            builder.Services.AddApplication();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            // Aplica migraciones automáticamente al iniciar
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<MillionRealStateDbContext>();
+                db.Database.Migrate();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -38,12 +42,9 @@ namespace MillionRealState.Api
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
+            app.UseMiddleware<ExceptionMiddleware>();
             app.MapControllers();
-
             app.Run();
         }
     }
