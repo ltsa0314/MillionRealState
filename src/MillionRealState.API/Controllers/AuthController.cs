@@ -63,17 +63,6 @@ public class AuthController : ControllerBase
         return Ok(new { token });
     }
 
-    /// <summary>
-    /// Logs out the current user.
-    /// </summary>
-    [Authorize]
-    [HttpPost("logout")]
-    public async Task<IActionResult> Logout()
-    {
-        await _signInManager.SignOutAsync();
-        return Ok(new { message = "Logged out successfully." });
-    }
-
     private string GenerateJwtToken(IdentityUser user)
     {
         var jwtSettings = _configuration.GetSection("Jwt");

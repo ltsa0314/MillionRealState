@@ -27,11 +27,10 @@ namespace MillionRealState.Api
             builder.Services.AddDbContext<MillionStateIdentityDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("MillionRealStateDb")));
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            builder.Services.AddIdentityCore<IdentityUser>()
                 .AddEntityFrameworkStores<MillionStateIdentityDbContext>()
-                .AddDefaultTokenProviders();
+                .AddApiEndpoints();
 
-            var jwtSettings = builder.Configuration.GetSection("Jwt");
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -45,9 +44,11 @@ namespace MillionRealState.Api
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings["Issuer"],
-                    ValidAudience = jwtSettings["Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])
+                    )
                 };
             });
 
@@ -122,3 +123,4 @@ namespace MillionRealState.Api
         }
     }
 }
+
