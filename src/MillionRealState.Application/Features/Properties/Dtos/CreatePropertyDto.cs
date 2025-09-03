@@ -9,6 +9,6 @@ namespace MillionRealState.Application.Features.Properties.Dtos
         public decimal Price { get; set; }
         public string CodeInternal { get; set; } = string.Empty;
         public int Year { get; set; }
-        public int IdOwner { get; set; }
+        public Guid IdOwner { get; set; }
     }
 }

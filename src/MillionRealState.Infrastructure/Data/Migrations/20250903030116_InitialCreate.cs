@@ -36,8 +36,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                 name: "Properties",
                 columns: table => new
                 {
-                    IdProperty = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdProperty = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -47,7 +46,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CodeInternal = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
-                    IdOwner = table.Column<int>(type: "int", nullable: false),
+                    IdOwner = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
@@ -60,12 +59,11 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                 name: "PropertyImages",
                 columns: table => new
                 {
-                    IdPropertyImage = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdProperty = table.Column<int>(type: "int", nullable: false),
+                    IdPropertyImage = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdProperty = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     File = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false),
-                    PropertyIdProperty = table.Column<int>(type: "int", nullable: false)
+                    PropertyIdProperty = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,14 +86,13 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                 name: "PropertyTraces",
                 columns: table => new
                 {
-                    IdPropertyTrace = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPropertyTrace = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateSale = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IdProperty = table.Column<int>(type: "int", nullable: false),
-                    PropertyIdProperty = table.Column<int>(type: "int", nullable: false),
+                    IdProperty = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PropertyIdProperty = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },

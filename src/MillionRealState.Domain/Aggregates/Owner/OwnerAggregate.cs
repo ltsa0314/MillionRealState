@@ -9,8 +9,9 @@ namespace MillionRealState.Domain.Aggregates.Owner
         public AddressValueObject Address { get; set; }
         public string? Photo { get; set; }
         public DateTime Birthday { get; set; }
-        private OwnerAggregate() { }
-        // EF Core
+
+        protected OwnerAggregate() { }
+
 
         public OwnerAggregate(Guid idOwner, string name, AddressValueObject address, string? photo, DateTime birthday)
         {

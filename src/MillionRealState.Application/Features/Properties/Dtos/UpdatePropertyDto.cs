@@ -8,6 +8,6 @@ namespace MillionRealState.Application.Features.Properties.Dtos
         public AddressDto Address { get; set; } = default!;
         public string CodeInternal { get; set; } = string.Empty;
         public int Year { get; set; }
-        public int IdOwner { get; set; } 
+        public Guid IdOwner { get; set; } 
     }
 }

@@ -25,10 +25,10 @@ namespace MillionRealState.Application.Features.Properties.Services
             IValidator<AddPropertyImageDto> imgVal,
              IValidator<ChangePriceDto> priceVal,
         IMapper mapper)
-            => (_repo, _createVal, _updateVal, _imgVal, _mapper) = (repo, createVal, updateVal, imgVal, mapper);
+            => (_repo, _createVal, _updateVal, _imgVal,_priceVal, _mapper) = (repo, createVal, updateVal, imgVal, priceVal, mapper);
 
         // Create Property Building
-        public async Task<int> CreateAsync(CreatePropertyDto dto, CancellationToken ct = default)
+        public async Task<Guid> CreateAsync(CreatePropertyDto dto, CancellationToken ct = default)
         {
             await _createVal.ValidateAndThrowAsync(dto, ct);
 

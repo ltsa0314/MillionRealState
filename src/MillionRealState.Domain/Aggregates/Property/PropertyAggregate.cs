@@ -10,13 +10,13 @@ namespace MillionRealState.Domain.Aggregates.Property
     /// </summary>
     public class PropertyAggregate : AggregateRoot
     {
-        public int IdProperty { get; private set; }
+        public Guid IdProperty { get; private set; }
         public string Name { get; private set; } = string.Empty;
         public AddressValueObject Address { get; private set; } = default!;
         public decimal Price { get; private set; }
         public string CodeInternal { get; private set; } = string.Empty;
         public int Year { get; private set; }
-        public int IdOwner { get; private set; }
+        public Guid IdOwner { get; private set; }
 
         /// <summary>
         /// Colección de imágenes asociadas a la propiedad (lazy loading).
@@ -42,7 +42,7 @@ namespace MillionRealState.Domain.Aggregates.Property
         /// <param name="idOwner">Identificador del propietario.</param>
         /// <exception cref="ArgumentException">Si algún parámetro es inválido.</exception>
         /// <exception cref="ArgumentNullException">Si la dirección es nula.</exception>
-        public PropertyAggregate(string name, AddressValueObject address, decimal price, string codeInternal, int year, int idOwner)
+        public PropertyAggregate(string name, AddressValueObject address, decimal price, string codeInternal, int year, Guid idOwner)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("El nombre de la propiedad no puede estar vacío.", nameof(name));
@@ -54,8 +54,8 @@ namespace MillionRealState.Domain.Aggregates.Property
                 throw new ArgumentException("El código interno no puede estar vacío.", nameof(codeInternal));
             if (year <= 0)
                 throw new ArgumentException("El año debe ser mayor que cero.", nameof(year));
-            if (idOwner <= 0)
-                throw new ArgumentException("El identificador del propietario debe ser mayor que cero.", nameof(idOwner));
+            if (idOwner == Guid.Empty)
+                throw new ArgumentException("El identificador del propietario es obligatorio.", nameof(idOwner));
 
             Name = name;
             Address = address;
@@ -105,7 +105,7 @@ namespace MillionRealState.Domain.Aggregates.Property
         /// <param name="idOwner">Nuevo identificador de propietario.</param>
         /// <exception cref="ArgumentException">Si algún parámetro es inválido.</exception>
         /// <exception cref="ArgumentNullException">Si la dirección es nula.</exception>    
-        public void Update(string name, AddressValueObject address, string codeInternal, int year, int idOwner)
+        public void Update(string name, AddressValueObject address, string codeInternal, int year, Guid idOwner)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("El nombre de la propiedad no puede estar vacío.", nameof(name));
@@ -115,8 +115,8 @@ namespace MillionRealState.Domain.Aggregates.Property
                 throw new ArgumentException("El código interno no puede estar vacío.", nameof(codeInternal));
             if (year <= 0)
                 throw new ArgumentException("El año debe ser mayor que cero.", nameof(year));
-            if (idOwner <= 0)
-                throw new ArgumentException("El identificador del propietario debe ser mayor que cero.", nameof(idOwner));
+            if (idOwner == Guid.Empty)
+                throw new ArgumentException("El identificador del propietario es obligatorio.", nameof(idOwner));
 
             Name = name;
             Address = address;

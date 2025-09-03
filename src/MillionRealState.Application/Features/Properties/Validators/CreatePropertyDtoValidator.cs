@@ -22,6 +22,6 @@ public class CreatePropertyDtoValidator : AbstractValidator<CreatePropertyDto>
             .GreaterThan(0).WithMessage("El año debe ser mayor que cero.");
 
         RuleFor(x => x.IdOwner)
-            .GreaterThan(0).WithMessage("El propietario es obligatorio.");
+            .NotEmpty().WithMessage("El propietario es obligatorio.");
     }
 }

@@ -12,7 +12,7 @@ using MillionRealState.Infrastructure.Data.Context;
 namespace MillionRealState.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(MillionRealStateDbContext))]
-    [Migration("20250903014848_InitialCreate")]
+    [Migration("20250903030116_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -61,11 +61,9 @@ namespace MillionRealState.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("MillionRealState.Domain.Aggregates.Property.PropertyAggregate", b =>
                 {
-                    b.Property<int>("IdProperty")
+                    b.Property<Guid>("IdProperty")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProperty"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CodeInternal")
                         .IsRequired()
@@ -80,8 +78,8 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("IdOwner")
-                        .HasColumnType("int");
+                    b.Property<Guid>("IdOwner")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -101,11 +99,9 @@ namespace MillionRealState.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("MillionRealState.Domain.Aggregates.Property.PropertyImage", b =>
                 {
-                    b.Property<int>("IdPropertyImage")
+                    b.Property<Guid>("IdPropertyImage")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPropertyImage"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
@@ -115,11 +111,11 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("IdProperty")
-                        .HasColumnType("int");
+                    b.Property<Guid>("IdProperty")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("PropertyIdProperty")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PropertyIdProperty")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("IdPropertyImage");
 
@@ -132,11 +128,9 @@ namespace MillionRealState.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("MillionRealState.Domain.Aggregates.PropertyTrace.PropertyTraceAggregate", b =>
                 {
-                    b.Property<int>("IdPropertyTrace")
+                    b.Property<Guid>("IdPropertyTrace")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPropertyTrace"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -149,16 +143,16 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                     b.Property<DateTime>("DateSale")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdProperty")
-                        .HasColumnType("int");
+                    b.Property<Guid>("IdProperty")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("PropertyIdProperty")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PropertyIdProperty")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Tax")
                         .HasColumnType("decimal(18,2)");
@@ -223,8 +217,8 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                 {
                     b.OwnsOne("MillionRealState.Domain.Aggregates.Owner.AddressValueObject", "Address", b1 =>
                         {
-                            b1.Property<int>("PropertyAggregateIdProperty")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("PropertyAggregateIdProperty")
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("City")
                                 .IsRequired()

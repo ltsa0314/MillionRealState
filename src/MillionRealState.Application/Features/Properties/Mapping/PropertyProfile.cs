@@ -11,6 +11,10 @@ namespace MillionRealState.Application.Features.Properties.Mapping
     {
         public PropertyProfile()
         {
+
+            // PropertyFilterDto   -> PropertyFilter
+            CreateMap<PropertyFilterDto, PropertyFilter>();
+
             // CreatePropertyDto -> PropertyAggregate
             CreateMap<CreatePropertyDto, PropertyAggregate>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));

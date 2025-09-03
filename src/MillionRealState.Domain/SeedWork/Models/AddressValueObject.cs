@@ -8,7 +8,7 @@
         public string ZipCode { get; }
         public string Country { get; }
 
-        private AddressValueObject() { } // EF Core
+        protected AddressValueObject() { } // EF Core
 
         public AddressValueObject(string street, string city, string state, string zipCode, string country)
         {

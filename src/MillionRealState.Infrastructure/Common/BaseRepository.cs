@@ -28,7 +28,15 @@ namespace MillionRealState.Infrastructure.Common
                 throw new ArgumentNullException(nameof(entity));
 
             await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
+                try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                var innerMessage = ex.InnerException?.Message ?? ex.Message;
+                throw new Exception($"Error al guardar la entidad: {innerMessage}", ex);
+            }
         }
 
         public virtual async Task DeleteAsync(TKey id)

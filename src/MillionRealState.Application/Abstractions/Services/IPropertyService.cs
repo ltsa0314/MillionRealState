@@ -5,7 +5,7 @@ namespace MillionRealState.Application.Abstractions.Services
 {
     public interface IPropertyService
     {
-        Task<int> CreateAsync(CreatePropertyDto dto, CancellationToken ct = default);
+        Task<Guid> CreateAsync(CreatePropertyDto dto, CancellationToken ct = default);
         Task AddImageAsync(Guid idProperty, AddPropertyImageDto dto, CancellationToken ct = default);
         Task ChangePriceAsync(Guid idProperty, ChangePriceDto dto, CancellationToken ct = default);
         Task UpdateAsync(Guid idProperty, UpdatePropertyDto dto, CancellationToken ct = default);

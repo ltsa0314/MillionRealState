@@ -11,7 +11,7 @@ namespace MillionRealState.Domain.Aggregates.PropertyTrace
         /// <summary>
         /// Identificador único de la traza de propiedad.
         /// </summary>
-        public int IdPropertyTrace { get; private set; }
+        public Guid  IdPropertyTrace { get; private set; }
 
         /// <summary>
         /// Fecha de la venta o evento registrado.
@@ -36,7 +36,7 @@ namespace MillionRealState.Domain.Aggregates.PropertyTrace
         /// <summary>
         /// Identificador de la propiedad asociada.
         /// </summary>
-        public int IdProperty { get; private set; }
+        public Guid IdProperty { get; private set; }
 
         /// <summary>
         /// Propiedad de navegación a la propiedad asociada (lazy loading).
@@ -53,7 +53,7 @@ namespace MillionRealState.Domain.Aggregates.PropertyTrace
         /// <param name="idProperty">Identificador de la propiedad asociada.</param>
         /// <param name="createdBy">Usuario que crea el registro.</param>
         /// <exception cref="ArgumentException">Si algún parámetro es inválido.</exception>
-        public PropertyTraceAggregate(DateTime dateSale, string name, decimal value, decimal tax, int idProperty, string createdBy)
+        public PropertyTraceAggregate(DateTime dateSale, string name, decimal value, decimal tax, Guid   idProperty, string createdBy)
         {
             if (dateSale == default)
                 throw new ArgumentException("La fecha de venta debe ser válida.", nameof(dateSale));
@@ -63,8 +63,8 @@ namespace MillionRealState.Domain.Aggregates.PropertyTrace
                 throw new ArgumentException("El valor debe ser mayor que cero.", nameof(value));
             if (tax < 0)
                 throw new ArgumentException("El impuesto no puede ser negativo.", nameof(tax));
-            if (idProperty <= 0)
-                throw new ArgumentException("El identificador de la propiedad debe ser mayor que cero.", nameof(idProperty));
+            if (idProperty == Guid.Empty)
+                throw new ArgumentException("El identificador de la propiedad es obligatorio.", nameof(idProperty));
             if (string.IsNullOrWhiteSpace(createdBy))
                 throw new ArgumentException("El usuario creador no puede estar vacío.", nameof(createdBy));
 

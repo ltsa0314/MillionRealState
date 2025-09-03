@@ -10,6 +10,9 @@ namespace MillionRealState.Application.Features.Owner.Mapping
     {
         public OwnerProfile()
         {
+            //  OwnerFilterDto ->  OwnerFilterDto
+            CreateMap<OwnerFilterDto, OwnerFilter>();
+
             // CreateOwnerDto -> OwnerAggregate
             CreateMap<CreateOwnerDto, OwnerAggregate>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address));

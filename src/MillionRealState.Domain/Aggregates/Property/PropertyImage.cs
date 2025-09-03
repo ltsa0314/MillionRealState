@@ -5,8 +5,8 @@ namespace MillionRealState.Domain.Aggregates.Property
     /// </summary>
     public class PropertyImage
     {
-        public int IdPropertyImage { get; private set; }
-        public int IdProperty { get; private set; }
+        public Guid IdPropertyImage { get; private set; }
+        public Guid IdProperty { get; private set; }
         public string File { get; private set; } = string.Empty;
         public bool Enabled { get; private set; }
 
@@ -18,10 +18,11 @@ namespace MillionRealState.Domain.Aggregates.Property
         /// <summary>
         /// Constructor principal para crear una imagen de propiedad.
         /// </summary>
-        public PropertyImage(int idProperty, string file, bool enabled)
+        public PropertyImage(Guid idProperty, string file, bool enabled)
         {
-            if (idProperty <= 0)
-                throw new ArgumentException("El identificador de la propiedad debe ser mayor que cero.", nameof(idProperty));
+            if (idProperty == Guid.Empty)
+                throw new ArgumentException("El identificador de la propiedad es obligatorio.", nameof(idProperty));
+
             if (string.IsNullOrWhiteSpace(file))
                 throw new ArgumentException("El archivo de imagen no puede estar vacío.", nameof(file));
 
