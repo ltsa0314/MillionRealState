@@ -23,7 +23,13 @@ namespace MillionRealState.Api
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                var xmlFilename = "MillionRealState.Api.xml"; 
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "MillionRealState.Application.xml"));
+            });
 
             var app = builder.Build();
 
