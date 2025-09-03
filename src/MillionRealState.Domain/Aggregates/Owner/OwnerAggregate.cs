@@ -4,35 +4,33 @@ namespace MillionRealState.Domain.Aggregates.Owner
 {
     public class OwnerAggregate : AggregateRoot
     {
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public AddressValueObject Address { get; private set; }
-        public string? Photo { get; private set; }
-        public DateTime Birthday { get; private set; }
+        public Guid IdOwner { get; set; }
+        public string Name { get; set; }
+        public AddressValueObject Address { get; set; }
+        public string? Photo { get; set; }
+        public DateTime Birthday { get; set; }
+        private OwnerAggregate() { }
+        // EF Core
 
-        private OwnerAggregate() { } // EF Core
-
-        public OwnerAggregate(Guid id, string name, AddressValueObject address, string? photo, DateTime birthday)
+        public OwnerAggregate(Guid idOwner, string name, AddressValueObject address, string? photo, DateTime birthday)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name cannot be empty.");
-
-            if (address is null)
-                throw new ArgumentNullException(nameof(address));
-
-            if (birthday > DateTime.UtcNow)
-                throw new ArgumentException("Birthday cannot be a future date.");
-
-            Id = id;
+            IdOwner = idOwner;
             Name = name;
-            Address = address ?? throw new ArgumentNullException(nameof(address));
+            Address = address;
+            Photo = photo;
+            Birthday = birthday;
+        }
+
+        public void Update(string name, AddressValueObject address, string? photo, DateTime birthday)
+        {
+            Name = name;
+            Address = address;
             Photo = photo;
             Birthday = birthday;
         }
 
         public void UpdateAddress(AddressValueObject newAddress)
         {
-            if (newAddress is null) throw new ArgumentNullException(nameof(newAddress));
             Address = newAddress;
         }
 

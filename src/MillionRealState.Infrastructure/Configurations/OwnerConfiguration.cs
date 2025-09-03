@@ -21,7 +21,7 @@ namespace MillionRealState.Infrastructure.Configurations
             builder.ToTable("Owners");
 
             // Clave primaria
-            builder.HasKey(o => o.Id);
+            builder.HasKey(o => o.IdOwner);
 
             // Propiedad Name: requerida, longitud máxima 100
             builder.Property(o => o.Name)
