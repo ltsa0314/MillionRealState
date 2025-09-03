@@ -1,7 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using MillionRealState.Infrastructure.Data.Context;
-using MillionRealState.Infrastructure;
+using Microsoft.IdentityModel.Tokens;
 using MillionRealState.Application;
+using MillionRealState.Infrastructure;
+using MillionRealState.Infrastructure.Data.Context;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace MillionRealState.Api
 {
@@ -17,38 +23,98 @@ namespace MillionRealState.Api
                     sqlOptions => sqlOptions.EnableRetryOnFailure())
                    .UseLazyLoadingProxies());
 
+            // DbContext  Identity
+            builder.Services.AddDbContext<MillionStateIdentityDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("MillionRealStateDb")));
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<MillionStateIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            var jwtSettings = builder.Configuration.GetSection("Jwt");
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]))
+                };
+            });
+
+            builder.Services.AddAuthorization();
+
             // Register application and infrastructure services
             builder.Services.AddInfrastructure();
             builder.Services.AddApplication();
 
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
+             {
+                 var xmlFilename = "MillionRealState.Api.xml";
+                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "MillionRealState.Application.xml"));
+
+                 // JWT Bearer Security Definition
+                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                 {
+                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+                     Name = "Authorization",
+                     In = ParameterLocation.Header,
+                     Type = SecuritySchemeType.Http,
+                     Scheme = "Bearer",
+                     BearerFormat = "JWT"
+                 });
+
+                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                 {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                 });
+             });
+
+            builder.Services.AddControllers(options =>
             {
-                var xmlFilename = "MillionRealState.Api.xml"; 
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "MillionRealState.Application.xml"));
+                options.Filters.Add(new AuthorizeFilter());
             });
 
             var app = builder.Build();
-
-            // Aplica migraciones automáticamente al iniciar
-            using (var scope = app.Services.CreateScope())
-            {
-                var db = scope.ServiceProvider.GetRequiredService<MillionRealStateDbContext>();
-                db.Database.EnsureDeleted();
-                db.Database.Migrate();
-            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
+                using var scope = app.Services.CreateScope();
+                var db = scope.ServiceProvider.GetRequiredService<MillionRealStateDbContext>();
+                db.Database.EnsureDeleted();
+                db.Database.Migrate();
+
+                var identityDb = scope.ServiceProvider.GetRequiredService<MillionStateIdentityDbContext>();
+                identityDb.Database.Migrate();
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<ExceptionMiddleware>();
             app.MapControllers();

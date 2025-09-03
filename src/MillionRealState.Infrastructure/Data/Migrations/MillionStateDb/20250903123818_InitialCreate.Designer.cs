@@ -9,10 +9,10 @@ using MillionRealState.Infrastructure.Data.Context;
 
 #nullable disable
 
-namespace MillionRealState.Infrastructure.Data.Migrations
+namespace MillionRealState.Infrastructure.Data.Migrations.MillionStateDb
 {
     [DbContext(typeof(MillionRealStateDbContext))]
-    [Migration("20250903030116_InitialCreate")]
+    [Migration("20250903123818_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

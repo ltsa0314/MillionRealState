@@ -8,7 +8,7 @@ using MillionRealState.Infrastructure.Data.Context;
 
 #nullable disable
 
-namespace MillionRealState.Infrastructure.Data.Migrations
+namespace MillionRealState.Infrastructure.Data.Migrations.MillionStateDb
 {
     [DbContext(typeof(MillionRealStateDbContext))]
     partial class MillionRealStateDbContextModelSnapshot : ModelSnapshot

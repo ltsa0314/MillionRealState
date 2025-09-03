@@ -1,4 +1,5 @@
-        using FluentValidation;
+using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MillionRealState.Application.Abstractions.Services;
 using MillionRealState.Application.Common.Exceptions;
@@ -10,7 +11,8 @@ namespace MillionRealState.API.Controllers
     /// API controller for managing property owners.
     /// Provides endpoints to create, update, retrieve and list owners.
     /// </summary>
-    [ApiController] 
+    [Authorize]
+    [ApiController]
     [Route("api/[controller]")]
     public class OwnerController : ControllerBase
     {

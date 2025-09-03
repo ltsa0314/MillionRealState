@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MillionRealState.Application.Abstractions.Services;
 using MillionRealState.Application.Common.Exceptions;
@@ -6,6 +7,7 @@ using MillionRealState.Application.Features.Properties.Dtos;
 
 namespace MillionRealState.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PropertyController : ControllerBase

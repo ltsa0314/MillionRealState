@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace MillionRealState.Infrastructure.Data.Migrations
+namespace MillionRealState.Infrastructure.Data.Migrations.MillionStateDb
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

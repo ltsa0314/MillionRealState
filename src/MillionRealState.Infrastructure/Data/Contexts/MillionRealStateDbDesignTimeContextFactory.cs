@@ -5,7 +5,7 @@ using System.IO;
 
 namespace MillionRealState.Infrastructure.Data.Context
 {
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<MillionRealStateDbContext>
+    public class MillionRealStateDbDesignTimeContextFactory : IDesignTimeDbContextFactory<MillionRealStateDbContext>
     {
         public MillionRealStateDbContext CreateDbContext(string[] args)
         {
