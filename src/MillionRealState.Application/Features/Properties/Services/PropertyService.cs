@@ -14,6 +14,8 @@ namespace MillionRealState.Application.Features.Properties.Services
         private readonly IValidator<CreatePropertyDto> _createVal;
         private readonly IValidator<UpdatePropertyDto> _updateVal;
         private readonly IValidator<AddPropertyImageDto> _imgVal;
+        private readonly IValidator<ChangePriceDto> _priceVal;
+
         private readonly IMapper _mapper;
 
         public PropertyService(
@@ -21,7 +23,8 @@ namespace MillionRealState.Application.Features.Properties.Services
             IValidator<CreatePropertyDto> createVal,
             IValidator<UpdatePropertyDto> updateVal,
             IValidator<AddPropertyImageDto> imgVal,
-            IMapper mapper)
+             IValidator<ChangePriceDto> priceVal,
+        IMapper mapper)
             => (_repo, _createVal, _updateVal, _imgVal, _mapper) = (repo, createVal, updateVal, imgVal, mapper);
 
         // Create Property Building
@@ -48,16 +51,18 @@ namespace MillionRealState.Application.Features.Properties.Services
         }
 
         // Change Price
-        public async Task ChangePriceAsync(Guid idProperty, decimal newPrice, CancellationToken ct = default)
+        public async Task ChangePriceAsync(Guid idProperty, ChangePriceDto dto, CancellationToken ct = default)
         {
+            await _priceVal.ValidateAndThrowAsync(dto, ct);
+
             var prop = await _repo.GetByIdAsync(idProperty)
                       ?? throw new KeyNotFoundException($"Property {idProperty} no existe.");
 
-            prop.ChangePrice(newPrice);
+            prop.ChangePrice(dto.NewPrice);
             await _repo.UpdateAsync(prop);
         }
 
-        // Update property (usando mapper para Address VO)
+        // Update property
         public async Task UpdateAsync(Guid idProperty, UpdatePropertyDto dto, CancellationToken ct = default)
         {
             await _updateVal.ValidateAndThrowAsync(dto, ct);
@@ -65,7 +70,7 @@ namespace MillionRealState.Application.Features.Properties.Services
             var prop = await _repo.GetByIdAsync(idProperty)
                       ?? throw new KeyNotFoundException($"Property {idProperty} no existe.");
 
-            var addressVO = _mapper.Map<AddressValueObject>(dto); // mapeo configurado arriba
+            var addressVO = _mapper.Map<AddressValueObject>(dto.Address);
             prop.Update(dto.Name, addressVO, dto.CodeInternal, dto.Year, dto.IdOwner);
 
             await _repo.UpdateAsync(prop);

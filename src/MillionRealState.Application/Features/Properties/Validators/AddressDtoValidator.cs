@@ -1,5 +1,5 @@
 using FluentValidation;
-using MillionRealState.Application.Features.Properties.Dtos;
+using MillionRealState.Application.Common.Dtos;
 
 public class AddressDtoValidator : AbstractValidator<AddressDto>
 {

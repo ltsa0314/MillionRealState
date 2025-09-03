@@ -1,4 +1,6 @@
-﻿    namespace MillionRealState.Application.Features.Properties.Dtos
+﻿using MillionRealState.Application.Common.Dtos;
+
+namespace MillionRealState.Application.Features.Properties.Dtos
 {
     public class PropertyDto
     {

@@ -1,4 +1,5 @@
 using AutoMapper;
+using MillionRealState.Application.Common.Dtos;
 using MillionRealState.Application.Features.Properties.Dtos;
 using MillionRealState.Domain.Aggregates.Owner;
 using MillionRealState.Domain.Aggregates.Property;

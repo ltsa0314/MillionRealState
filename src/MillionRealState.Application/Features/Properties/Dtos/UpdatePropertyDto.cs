@@ -1,4 +1,13 @@
-﻿    namespace MillionRealState.Application.Features.Properties.Dtos
+﻿using MillionRealState.Application.Common.Dtos;
+
+namespace MillionRealState.Application.Features.Properties.Dtos
 {
-    public sealed record UpdatePropertyDto(string Name, AddressDto Address, string CodeInternal, int Year, int OwnerId);
+    public class UpdatePropertyDto
+    {
+        public string Name { get; set; } = string.Empty;
+        public AddressDto Address { get; set; } = default!;
+        public string CodeInternal { get; set; } = string.Empty;
+        public int Year { get; set; }
+        public int IdOwner { get; set; } 
+    }
 }

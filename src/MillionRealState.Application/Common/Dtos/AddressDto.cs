@@ -1,4 +1,4 @@
-﻿namespace MillionRealState.Application.Features.Properties.Dtos
+﻿namespace MillionRealState.Application.Common.Dtos
 {
     public class AddressDto
     {
