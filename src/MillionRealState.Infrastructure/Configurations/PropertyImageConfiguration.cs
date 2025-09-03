@@ -40,7 +40,7 @@ namespace MillionRealState.Infrastructure.Configurations
             builder.HasOne<PropertyAggregate>()
                 .WithMany(p => p.Images)
                 .HasForeignKey(img => img.IdProperty)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

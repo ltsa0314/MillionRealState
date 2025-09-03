@@ -27,7 +27,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("MillionRealState.Domain.Aggregates.Owner.OwnerAggregate", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdOwner")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -51,7 +51,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdOwner");
 
                     b.ToTable("Owners", (string)null);
                 });
@@ -176,7 +176,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                 {
                     b.OwnsOne("MillionRealState.Domain.Aggregates.Owner.AddressValueObject", "Address", b1 =>
                         {
-                            b1.Property<Guid>("OwnerAggregateId")
+                            b1.Property<Guid>("OwnerAggregateIdOwner")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("City")
@@ -204,12 +204,12 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                                 .HasMaxLength(20)
                                 .HasColumnType("nvarchar(20)");
 
-                            b1.HasKey("OwnerAggregateId");
+                            b1.HasKey("OwnerAggregateIdOwner");
 
                             b1.ToTable("Owners");
 
                             b1.WithOwner()
-                                .HasForeignKey("OwnerAggregateId");
+                                .HasForeignKey("OwnerAggregateIdOwner");
                         });
 
                     b.Navigation("Address")
@@ -265,7 +265,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                     b.HasOne("MillionRealState.Domain.Aggregates.Property.PropertyAggregate", null)
                         .WithMany("Images")
                         .HasForeignKey("IdProperty")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("MillionRealState.Domain.Aggregates.Property.PropertyAggregate", "Property")
@@ -282,7 +282,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                     b.HasOne("MillionRealState.Domain.Aggregates.Property.PropertyAggregate", null)
                         .WithMany("Traces")
                         .HasForeignKey("IdProperty")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("MillionRealState.Domain.Aggregates.Property.PropertyAggregate", "Property")

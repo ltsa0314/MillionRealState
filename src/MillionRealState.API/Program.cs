@@ -31,6 +31,7 @@ namespace MillionRealState.Api
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<MillionRealStateDbContext>();
+                db.Database.EnsureDeleted();
                 db.Database.Migrate();
             }
 

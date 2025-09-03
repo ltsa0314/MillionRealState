@@ -28,7 +28,7 @@ namespace MillionRealState.Infrastructure.Configurations
             builder.HasOne<PropertyAggregate>()
                 .WithMany(p => p.Traces)
                 .HasForeignKey(t => t.IdProperty)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

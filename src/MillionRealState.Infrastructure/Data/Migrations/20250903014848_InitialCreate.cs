@@ -15,7 +15,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                 name: "Owners",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdOwner = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Address_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -29,7 +29,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Owners", x => x.Id);
+                    table.PrimaryKey("PK_Owners", x => x.IdOwner);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,7 +75,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                         column: x => x.IdProperty,
                         principalTable: "Properties",
                         principalColumn: "IdProperty",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PropertyImages_Properties_PropertyIdProperty",
                         column: x => x.PropertyIdProperty,
@@ -107,7 +107,7 @@ namespace MillionRealState.Infrastructure.Data.Migrations
                         column: x => x.IdProperty,
                         principalTable: "Properties",
                         principalColumn: "IdProperty",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PropertyTraces_Properties_PropertyIdProperty",
                         column: x => x.PropertyIdProperty,
