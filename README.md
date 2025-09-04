@@ -56,7 +56,7 @@ docker-compose exec api dotnet ef database update
 ~~~
 
 5. **Accede a la API:**
-La API estará disponible en [http://localhost:5000](http://localhost:5000) (o el puerto configurado en el `docker-compose.yml`).
+La API estará disponible en [http://localhost:8081](http://localhost:8081) (o el puerto configurado en el `docker-compose.yml`).
 
 ---
 

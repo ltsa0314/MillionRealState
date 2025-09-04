@@ -19,13 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <ProjectReference Include="..\..\src\MillionRealState.Application\MillionRealState.Application.csproj" />
+    <ProjectReference Include="..\..\src\MillionRealState.Domain\MillionRealState.Domain.csproj" />
+    <ProjectReference Include="..\..\src\MillionRealState.Infrastructure\MillionRealState.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\MillionRealState.Application\MillionRealState.Application.csproj" />
-    <ProjectReference Include="..\src\MillionRealState.Domain\MillionRealState.Domain.csproj" />
-    <ProjectReference Include="..\src\MillionRealState.Infrastructure\MillionRealState.Infrastructure.csproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>
