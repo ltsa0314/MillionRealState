@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   millionrealstate-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -10,16 +8,8 @@ services:
     ports:
       - "1433:1433"
     restart: always
-
   millionrealstate.api:
+    image: ${DOCKER_REGISTRY-}millionrealstateapi
     build:
       context: .
       dockerfile: src/MillionRealState.Api/Dockerfile
-    container_name: millionrealstate-api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__MillionRealStateDb=Server=millionrealstate-db,1433;Database=MillionRealStateDb;User Id=sa;Password=MilliionPassswoord1!;TrustServerCertificate=True;
-    ports:
-      - "5000:80"
-    depends_on:
-      - millionrealstate-db

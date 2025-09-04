@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillionRealState.Applicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillionRealState.Api", "src\MillionRealState.Api\MillionRealState.Api.csproj", "{F7BC7FCC-9304-4294-9CB8-244DB7D9BECE}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillionRealState.TestsUnit", "tests\MillionRealState.TestsUnit\MillionRealState.TestsUnit.csproj", "{582E4229-E110-44E0-BA1A-09F3DC70CB7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MillionRealState.TestsUnit", "MillionRealState.TestsUnit\MillionRealState.TestsUnit.csproj", "{582E4229-E110-44E0-BA1A-09F3DC70CB7C}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +41,14 @@ Global
 		{F7BC7FCC-9304-4294-9CB8-244DB7D9BECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7BC7FCC-9304-4294-9CB8-244DB7D9BECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7BC7FCC-9304-4294-9CB8-244DB7D9BECE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{582E4229-E110-44E0-BA1A-09F3DC70CB7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{582E4229-E110-44E0-BA1A-09F3DC70CB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{582E4229-E110-44E0-BA1A-09F3DC70CB7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{582E4229-E110-44E0-BA1A-09F3DC70CB7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

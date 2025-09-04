@@ -104,7 +104,11 @@ namespace MillionRealState.Api
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-
+                // Redirige la raíz al Swagger UI
+                app.MapGet("/", context => {
+                    context.Response.Redirect("/swagger");
+                    return Task.CompletedTask;
+                });
                 using var scope = app.Services.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<MillionRealStateDbContext>();
                 db.Database.EnsureDeleted();
@@ -119,6 +123,7 @@ namespace MillionRealState.Api
             app.UseAuthorization();
             app.UseMiddleware<ExceptionMiddleware>();
             app.MapControllers();
+
             app.Run();
         }
     }
