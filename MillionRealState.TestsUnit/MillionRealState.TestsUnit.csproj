@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
@@ -22,10 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\src\MillionRealState.Application\MillionRealState.Application.csproj" />
     <ProjectReference Include="..\src\MillionRealState.Domain\MillionRealState.Domain.csproj" />
     <ProjectReference Include="..\src\MillionRealState.Infrastructure\MillionRealState.Infrastructure.csproj" />
   </ItemGroup>
