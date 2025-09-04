@@ -23,8 +23,36 @@ La API implementa autenticación y autorización mediante **ASP.NET Core Identit
 - Se pueden definir roles y políticas para controlar el acceso a recursos específicos.
 
 ---
+## Ejecución desde Visual Studio
+![alt text](image.png)
 
-## Levantar el proyecto con Docker Compose
+## Ejecución de pruebas unitarias
+
+Desde la raíz del proyecto, ejecuta:
+~~~
+dotnet test
+~~~
+
+
+## Estructura del proyecto
+
+```text
+MillionRealState/
+├── src/
+│   ├── MillionRealState.Domain/
+│   ├── MillionRealState.Application/
+│   ├── MillionRealState.Infrastructure/
+│   └── MillionRealState.API/
+├── MillionRealState.TestsUnit/
+│   ├── Domain/
+│   ├── Application/
+│   ├── Infrastructure/
+│   ├── API/
+│   └── Mocks/
+└── docker-compose.yml
+```
+
+## Levantar manualmente el proyecto con Docker Compose
 
 1. **Clona el repositorio:**
 ~~~
@@ -60,28 +88,3 @@ La API estará disponible en [http://localhost:8081](http://localhost:8081) (o e
 
 ---
 
-## Ejecución de pruebas unitarias
-
-Desde la raíz del proyecto, ejecuta:
-~~~
-dotnet test
-~~~
-
-
-## Estructura del proyecto
-
-```text
-MillionRealState/
-├── src/
-│   ├── MillionRealState.Domain/
-│   ├── MillionRealState.Application/
-│   ├── MillionRealState.Infrastructure/
-│   └── MillionRealState.API/
-├── MillionRealState.TestsUnit/
-│   ├── Domain/
-│   ├── Application/
-│   ├── Infrastructure/
-│   ├── API/
-│   └── Mocks/
-└── docker-compose.yml
-```
