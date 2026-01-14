@@ -1,15 +1,12 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using MillionRealState.Application.Abstractions.Services;
-using MillionRealState.Application.Features.Properties.Services;
-using MillionRealState.Application.Features.Owners.Services;
+using MediatR;
 using System.Reflection;
 
 namespace MillionRealState.Application
 {
     public static class ApplicationServiceRegistration
     {
-
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -20,13 +17,11 @@ namespace MillionRealState.Application
                 cfg.AddMaps(assembly);
             });
 
-
             // FluentValidation
-            services.AddValidatorsFromAssembly(assembly); 
+            services.AddValidatorsFromAssembly(assembly);
 
-
-            services.AddScoped<IPropertyService, PropertyService>();
-            services.AddScoped<IOwnerService, OwnerService>();
+            // MediatR - Registrar todos los handlers (commands y queries)
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
 
             return services;
         }

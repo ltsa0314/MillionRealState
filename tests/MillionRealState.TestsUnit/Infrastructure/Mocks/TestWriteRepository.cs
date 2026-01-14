@@ -1,6 +1,9 @@
 using MillionRealState.Infrastructure.Common;
 
-public class TestWriteRepository : BaseWriteRepository<TestEntity, Guid>
+namespace MillionRealState.TestsUnit.Infrastructure.Mocks
 {
-    public TestWriteRepository(TestMillionRealStateDbContext context) : base(context) { }
+    public class TestWriteRepository : BaseWriteRepository<TestEntity, Guid>
+    {
+        public TestWriteRepository(TestMillionRealStateDbContext context) : base(context) { }
+    }
 }

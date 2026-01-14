@@ -1,6 +1,9 @@
 using MillionRealState.Infrastructure.Common;
 
-public class TestReadRepository : BaseReadRepository<TestEntity, Guid>
+namespace MillionRealState.TestsUnit.Infrastructure.Mocks
 {
-    public TestReadRepository(TestMillionRealStateDbContext context) : base(context) { }
+    public class TestReadRepository : BaseReadRepository<TestEntity, Guid>
+    {
+        public TestReadRepository(TestMillionRealStateDbContext context) : base(context) { }
+    }
 }

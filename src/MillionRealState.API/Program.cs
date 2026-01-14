@@ -57,7 +57,6 @@ namespace MillionRealState.Api
             // Register application and infrastructure services
             builder.Services.AddInfrastructure();
             builder.Services.AddApplication();
-
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
              {

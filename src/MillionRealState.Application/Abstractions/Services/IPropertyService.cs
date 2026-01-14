@@ -1,5 +1,5 @@
 ﻿using MillionRealState.Application.Common.Results;
-using MillionRealState.Application.Features.Properties.Dtos;
+using MillionRealState.Application.Features.Property.Dtos;
 
 namespace MillionRealState.Application.Abstractions.Services
 {

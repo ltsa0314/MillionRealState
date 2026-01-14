@@ -1,9 +1,11 @@
 using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
+using MediatR;
+    using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MillionRealState.Application.Abstractions.Services;
 using MillionRealState.Application.Common.Exceptions;
-using MillionRealState.Application.Features.Properties.Dtos;
+using MillionRealState.Application.Features.Property.Commands;
+using MillionRealState.Application.Features.Property.Dtos;
+using MillionRealState.Application.Features.Property.Queries;
 
 namespace MillionRealState.API.Controllers
 {
@@ -12,15 +14,15 @@ namespace MillionRealState.API.Controllers
     [Route("api/[controller]")]
     public class PropertyController : ControllerBase
     {
-        private readonly IPropertyService _propertyService;
+        private readonly IMediator _mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyController"/>.
         /// </summary>
-        /// <param name="propertyService">Service for property operations.</param>
-        public PropertyController(IPropertyService propertyService)
+        /// <param name="mediator">MediatR instance for sending commands and queries.</param>
+        public PropertyController(IMediator mediator)
         {
-            _propertyService = propertyService;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -35,7 +37,9 @@ namespace MillionRealState.API.Controllers
         {
             try
             {
-                var property = await _propertyService.GetByIdAsync(id, ct);
+                var property = await _mediator.Send(new GetPropertyByIdQuery(id), ct);
+                if (property == null)
+                    return NotFound(new { error = "No se encontró la propiedad." });
                 return Ok(property);
             }
             catch (NotFoundException ex)
@@ -56,7 +60,7 @@ namespace MillionRealState.API.Controllers
         {
             try
             {
-                var id = await _propertyService.CreateAsync(dto, ct);
+                var id = await _mediator.Send(new CreatePropertyCommand(dto), ct);
                 return CreatedAtAction(nameof(GetById), new { id }, null);
             }
             catch (ValidationException ex)
@@ -78,7 +82,7 @@ namespace MillionRealState.API.Controllers
         {
             try
             {
-                await _propertyService.UpdateAsync(id, dto, ct);
+                await _mediator.Send(new UpdatePropertyCommand(id, dto), ct);
                 return NoContent();
             }
             catch (NotFoundException ex)
@@ -101,9 +105,10 @@ namespace MillionRealState.API.Controllers
         [ActionName("ListProperties")]
         public async Task<IActionResult> List([FromQuery] PropertyFilterDto filter, CancellationToken ct)
         {
-            var result = await _propertyService.ListAsync(filter, ct);
+            var result = await _mediator.Send(new ListPropertiesQuery(filter), ct);
             return Ok(result);
         }
+
         /// <summary>
         /// Adds an image to a property.
         /// </summary>
@@ -117,7 +122,7 @@ namespace MillionRealState.API.Controllers
         {
             try
             {
-                await _propertyService.AddImageAsync(id, dto, ct);
+                await _mediator.Send(new AddPropertyImageCommand(id, dto), ct);
                 return NoContent();
             }
             catch (NotFoundException ex)
@@ -129,7 +134,6 @@ namespace MillionRealState.API.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-
 
         /// <summary>
         /// Changes the price of a property.
@@ -143,7 +147,7 @@ namespace MillionRealState.API.Controllers
         {
             try
             {
-                await _propertyService.ChangePriceAsync(id, dto, ct);
+                await _mediator.Send(new ChangePropertyPriceCommand(id, dto), ct);
                 return NoContent();
             }
             catch (NotFoundException ex)

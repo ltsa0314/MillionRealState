@@ -1,7 +1,10 @@
 using MillionRealState.Domain.SeedWork.Models;
 
-public class TestEntity : AggregateRoot
+namespace MillionRealState.TestsUnit.Infrastructure.Mocks
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public class TestEntity : AggregateRoot
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+    }
 }

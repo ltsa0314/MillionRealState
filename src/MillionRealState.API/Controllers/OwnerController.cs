@@ -1,9 +1,11 @@
 using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MillionRealState.Application.Abstractions.Services;
 using MillionRealState.Application.Common.Exceptions;
+using MillionRealState.Application.Features.Owner.Commands;
 using MillionRealState.Application.Features.Owner.Dtos;
+using MillionRealState.Application.Features.Owner.Queries;
 
 namespace MillionRealState.API.Controllers
 {
@@ -16,15 +18,15 @@ namespace MillionRealState.API.Controllers
     [Route("api/[controller]")]
     public class OwnerController : ControllerBase
     {
-        private readonly IOwnerService _ownerService;
+        private readonly IMediator _mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OwnerController"/>.
         /// </summary>
-        /// <param name="ownerService">Service for owner operations.</param>
-        public OwnerController(IOwnerService ownerService)
+        /// <param name="mediator">MediatR instance for sending commands and queries.</param>
+        public OwnerController(IMediator mediator)
         {
-            _ownerService = ownerService;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -39,7 +41,9 @@ namespace MillionRealState.API.Controllers
         {
             try
             {
-                var owner = await _ownerService.GetByIdAsync(id, ct);
+                var owner = await _mediator.Send(new GetOwnerByIdQuery(id), ct);
+                if (owner == null)
+                    return NotFound(new { error = "No se encontró el propietario." });
                 return Ok(owner);
             }
             catch (NotFoundException ex)
@@ -60,8 +64,8 @@ namespace MillionRealState.API.Controllers
         {
             try
             {
-                var id = await _ownerService.CreateAsync(dto, ct);
-                return CreatedAtAction(nameof(GetById), new { id }, null);
+                var id = await _mediator.Send(new CreateOwnerCommand(dto), ct);
+                return CreatedAtAction("GetOwnerById", new { id = id }, null);
             }
             catch (ValidationException ex)
             {
@@ -82,7 +86,7 @@ namespace MillionRealState.API.Controllers
         {
             try
             {
-                await _ownerService.UpdateAsync(id, dto, ct);
+                await _mediator.Send(new UpdateOwnerCommand(id, dto), ct);
                 return NoContent();
             }
             catch (NotFoundException ex)
@@ -105,7 +109,7 @@ namespace MillionRealState.API.Controllers
         [ActionName("ListOwners")]
         public async Task<IActionResult> List([FromQuery] OwnerFilterDto filter, CancellationToken ct)
         {
-            var result = await _ownerService.ListAsync(filter, ct);
+            var result = await _mediator.Send(new ListOwnersQuery(filter), ct);
             return Ok(result);
         }
     }
