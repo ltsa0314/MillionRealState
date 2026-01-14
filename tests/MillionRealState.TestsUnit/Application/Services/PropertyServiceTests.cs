@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 public class PropertyServiceTests
 {
-    private readonly Mock<IPropertyRepository> _repoMock = new();
+    private readonly Mock<IPropertyWriteRepository> _repoMock = new();
     private readonly Mock<IValidator<CreatePropertyDto>> _createValMock = new();
     private readonly Mock<IValidator<UpdatePropertyDto>> _updateValMock = new();
     private readonly Mock<IValidator<AddPropertyImageDto>> _imgValMock = new();

@@ -10,7 +10,7 @@ namespace MillionRealState.Application.Features.Properties.Services
 {
     public sealed class PropertyService : IPropertyService
     {
-        private readonly IPropertyRepository _repo;
+        private readonly IPropertyWriteRepository _repo;
         private readonly IValidator<CreatePropertyDto> _createVal;
         private readonly IValidator<UpdatePropertyDto> _updateVal;
         private readonly IValidator<AddPropertyImageDto> _imgVal;
@@ -19,7 +19,7 @@ namespace MillionRealState.Application.Features.Properties.Services
         private readonly IMapper _mapper;
 
         public PropertyService(
-            IPropertyRepository repo,
+            IPropertyWriteRepository repo,
             IValidator<CreatePropertyDto> createVal,
             IValidator<UpdatePropertyDto> updateVal,
             IValidator<AddPropertyImageDto> imgVal,

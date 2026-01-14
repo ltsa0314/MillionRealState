@@ -24,4 +24,9 @@
     <ProjectReference Include="..\MillionRealState.Domain\MillionRealState.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Owner\Commands\" />
+    <Folder Include="Features\Owner\Queries\" />
+  </ItemGroup>
+
 </Project>

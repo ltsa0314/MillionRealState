@@ -7,7 +7,7 @@ namespace MillionRealState.Domain.SeedWork.Contracts
     /// </summary>
     /// <typeparam name="TEntity">Tipo de la entidad agregada.</typeparam>
     /// <typeparam name="TKey">Tipo de la clave primaria de la entidad.</typeparam>
-    public interface IRepositoryRead<TEntity, TKey>
+    public interface IReadRepository<TEntity, TKey>
         where TEntity : AggregateRoot
     {
         /// <summary>
@@ -22,6 +22,14 @@ namespace MillionRealState.Domain.SeedWork.Contracts
         /// </summary>
         /// <returns>Lista de entidades.</returns>
         Task<IEnumerable<TEntity>> GetAllAsync();
+
+        /// <summary>
+        /// Obtiene una lista paginada de entidades según la especificación.
+        /// </summary>
+        /// <param name="specification">Especificación de filtrado y paginación.</param>
+        /// <param name="ct">Token de cancelación.</param>
+        /// <returns>Tupla con la lista de entidades y el total de registros.</returns>
+        Task<(List<TEntity> Items, int Total)> GetAllPaginateAsync(IReadSpecification<TEntity> specification, CancellationToken ct = default);
 
         /// <summary>
         /// Verifica si existe una entidad con el identificador especificado.

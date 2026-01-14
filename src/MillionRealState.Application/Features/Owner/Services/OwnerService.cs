@@ -9,13 +9,13 @@ namespace MillionRealState.Application.Features.Owners.Services
 {
     public sealed class OwnerService : IOwnerService
     {
-        private readonly IOwnerRepository _repo;
+        private readonly IOwnerWriteRepository _repo;
         private readonly IValidator<CreateOwnerDto> _createVal;
         private readonly IValidator<UpdateOwnerDto> _updateVal;
         private readonly IMapper _mapper;
 
         public OwnerService(
-            IOwnerRepository repo,
+            IOwnerWriteRepository repo,
             IValidator<CreateOwnerDto> createVal,
             IValidator<UpdateOwnerDto> updateVal,
             IMapper mapper)

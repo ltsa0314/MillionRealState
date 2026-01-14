@@ -2,7 +2,7 @@
 
 namespace MillionRealState.Domain.Aggregates.PropertyTrace
 {
-    public interface IPropertyTraceRepository : IRepository<PropertyTraceAggregate, Guid>
+    public interface IPropertyReadTraceRepository : IReadRepository<PropertyTraceAggregate, Guid>
     {
     }
 }

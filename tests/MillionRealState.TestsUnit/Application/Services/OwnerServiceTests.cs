@@ -13,7 +13,7 @@ using MillionRealState.Application.Common.Dtos;
 
 public class OwnerServiceTests
 {
-    private readonly Mock<IOwnerRepository> _repoMock = new();
+    private readonly Mock<IOwnerWriteRepository> _repoMock = new();
     private readonly Mock<IValidator<CreateOwnerDto>> _createValMock = new();
     private readonly Mock<IValidator<UpdateOwnerDto>> _updateValMock = new();
     private readonly Mock<IMapper> _mapperMock = new();

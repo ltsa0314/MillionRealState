@@ -2,7 +2,7 @@
 using MillionRealState.Domain.Aggregates.Owner;
 using MillionRealState.Domain.Aggregates.Property;
 using MillionRealState.Domain.Aggregates.PropertyTrace;
-using MillionRealState.Infrastructure.Repositories;
+using MillionRealState.Infrastructure.Repositories.Write;
 
 namespace MillionRealState.Infrastructure
 {
@@ -10,9 +10,13 @@ namespace MillionRealState.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddScoped<IPropertyRepository, PropertyRepository>();
-            services.AddScoped<IOwnerRepository, OwnerRepository>();
-            services.AddScoped<IPropertyTraceRepository, PropertyTraceRepository>();
+            services.AddScoped<IPropertyReadRepository, PropertyReadRepository>();
+            services.AddScoped<IOwnerReadRepository, OwnerReadRepository>();
+            services.AddScoped<IPropertyReadTraceRepository, PropertyTraceReadRepository>();
+
+            services.AddScoped<IPropertyWriteRepository, PropertyWriteRepository>();
+            services.AddScoped<IOwnerWriteRepository, OwnerWriteRepository>();
+            services.AddScoped<IPropertyWriteTraceRepository, PropertyTraceWriteRepository>();
 
             return services;
         }

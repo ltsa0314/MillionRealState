@@ -4,9 +4,13 @@ namespace MillionRealState.Domain.Aggregates.Owner
     {
         public string? Name { get; set; }
         public string? City { get; set; }
-        public DateTime? BirthdayFrom { get; set; }
-        public DateTime? BirthdayTo { get; set; }
-        public int Page { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
+        public BirthdayRange? Birthday { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+    }
+    public class BirthdayRange
+    {
+        public DateTime? From { get; set; }
+        public DateTime? To { get; set; }
     }
 }
